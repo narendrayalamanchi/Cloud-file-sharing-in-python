@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %} Sign In {% endblock %}
+
+{% load static %}
+
+{% block maincontent %}
+
+
+   <div class="login-header">
+        <h2 style="color:navy;align-content:center;font-weight: bolder;text-align: center"> Cloud File Sharing </h2>
+   </div>
+   <div class="login-wrapper">
+        <div class="container">
+            <div class="login-body-block">
+                <div>
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <nav class="p-0 pl-0 navbar navbar-dark navbar-expand-lg justify-content-center">
+                            <h4 style="color:navy;align-content:center;font-weight: bolder;"> Sign In </h4>
+                        </nav>
+                    </div>
+                </div>
+                <br/>
+               
+                <form method="post">
+                        {% csrf_token %}
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-6 col-lg-4 col-sm-12">
+                                    
+                                <div class="email_section">
+                                    <label for="Email" class="font-weight-bold"><span class="text-danger">*</span>User Name:</label>
+                                    <input type="text" name="username" class="login_email form-control" placeholder="Username"
+                                        onfocus="focusloginemail(this)" regex=/^[a-zA-Z0-9]+$/> 
+                                </div> 
+
+                                <div class='password_section'>
+                                    <label for="Password" class="font-weight-bold"><span class="text-danger">*</span>Password:</label>
+                                    <div style="position: relative">
+                                        <input type="password" name="password" class="login_password form-control" placeholder="Password"
+                                        onfocus="focusloginpswd(this)">
+                                        <span class="hide_pswd_icon" onclick="loginpasswordshowhide(this)"
+                                            style="background-image: url({% static 'images/hide_password_icon.svg' %})">
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <input type="submit" name="signinbtn" id="signinbtn" class="btn btn-primary btn-block mt-3" value="Sign in">
+                        
+                            </div>
+                            <br>
+                                
+                        </div>
+                </form>
+                </div>
+            </div>  
+        </div>          
+               
+    </div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#password").keyup(function () {
+            $(".field-icon").css("visibility", "visible");
+
+        });
+        $('.toggle-password').click(function () {
+            $(".field-icon").css("visibility", "hidden");
+            $(".field-hideicon").css("visibility", "visible");
+            $('#password').prop('type', 'text');
+        });
+        $('.toggle-hidepassword').click(function () {
+            $(".field-icon").css("visibility", "visible");
+            $(".field-hideicon").css("visibility", "hidden");
+            $('#password').prop('type', 'password');
+        });
+    });
+
+    function loginpasswordshowhide(e) {
+
+        if ($(e).prev().attr("type") == "password") {
+            $(e).prev().attr("type", "text");
+            $(e).css("background-image", "url({% static 'images/show_password_icon.svg' %})")
+        } else {
+            $(e).prev().attr("type", "password")
+            $(e).css("background-image", "url({% static 'images/hide_password_icon.svg' %})")
+        }
+
+    }
+</script>
+
+{% endblock %}
